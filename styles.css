@@ -21,6 +21,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+h3 {
+  font-size: 90%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 /* Card styling for individual days of the week */
 .card {
   background-color: #fff;
@@ -29,16 +35,6 @@ h1 {
   padding: 20px;
   margin: 10px auto; /* Center horizontally and add vertical margin */
   max-width: 900px;
-}
-
-/* Card styling for each week */
-.week-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px auto; /* Center horizontally and add vertical margin */
-  max-width: 600px;
 }
 
 /* Day (header) styling */

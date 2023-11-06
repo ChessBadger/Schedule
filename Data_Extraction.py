@@ -2,9 +2,16 @@ import os
 import openpyxl
 import re
 
+
+# Specify the file path to be deleted
+file_path = "extracted_data.txt"
+
+if os.path.exists(file_path):
+    os.remove(file_path)
+    print(f"{file_path} has been deleted.")
+
+
 # Function to search for "Lashaun" in a worksheet and extract links and times
-
-
 def extract_info(ws):
     days = []
     days_to_numbers = {
@@ -19,6 +26,7 @@ def extract_info(ws):
     links = []
     times = []
     second_times = []
+    locations = []
 
     for row in ws.iter_rows():
         for cell in row:
@@ -55,6 +63,28 @@ def extract_info(ws):
                         break
                 if link:
                     links.append(link)
+
+    for link in links:
+        for row in ws.iter_rows():
+            for cell in row:
+                if cell.value and link in str(cell.value):
+                    # Search for a time moving up
+                    location = None
+                    if "OFFICE" in str(cell.value).upper():
+                        location = cell.value
+                        locations.append(location)
+                        break
+                    # Check the cell above the link and up to 3 cells above
+                    for offset in range(-1, -3, -1):
+                        if cell.row + offset <= 1:
+                            break
+                        above_cell = ws.cell(
+                            row=cell.row + offset, column=cell.column)
+                        if (r'^[^0-9!@#$%^&*()_=+[\]{};:\'",.<>?/\\|][^]*$', str(above_cell.value)):
+                            location = above_cell.value.replace("\n", " ")
+                    if location:
+                        locations.append(location)
+                        row = cell.row
 
     for link in links:
         for row in ws.iter_rows():
@@ -101,7 +131,7 @@ def extract_info(ws):
                         second_times.append(second_time)
                         row = cell.row
 
-    return days, links, times, second_times
+    return days, links, locations, second_times, times
 
 
 # Check the current working directory for Excel files
@@ -117,14 +147,14 @@ for excel_file in excel_files:
     for sheet_name in wb.sheetnames:
         ws = wb[sheet_name]
 
-        days, links, times, second_times = extract_info(ws)
+        days, links, locations, second_times, times = extract_info(ws)
 
-        # for index in range(len(links)):
-        #     print(days[index] + "\n" + links[index] + "\n" +
-        #           second_times[index] + "\n" + times[index] + "\n")
+        # Remove newline characters from each item in the 'locations' list
+        for i in range(len(locations)):
+            locations[i] = locations[i].replace("\n", " ")
 
         # After extracting information, store it in a list of tuples
-        extracted_info = list(zip(days, links, second_times, times))
+        extracted_info = list(zip(days, links, locations, second_times, times))
 
         # Sort the list of tuples by day
         sorted_info = sorted(extracted_info, key=lambda x: x[0])
@@ -145,10 +175,12 @@ for excel_file in excel_files:
 
         # Iterate through the sorted information and print it
         for info in sorted_info:
-            day, link, second_time, time = info
-            print(day + "\n" + link + "\n" + second_time + "\n" + time + "\n")
+            day, link, location, second_time, time = info
+            print(day + "\n" + link + "\n" + location +
+                  "\n" + second_time + "\n" + time + "\n")
 
-    # Create a text file to store the extracted data
+
+# Create a text file to store the extracted data
 output_file = open("extracted_data.txt", "w")
 
 for excel_file in excel_files:
@@ -159,9 +191,9 @@ for excel_file in excel_files:
     for sheet_name in wb.sheetnames:
         ws = wb[sheet_name]
 
-        days, links, times, second_times = extract_info(ws)
+        days, links, locations, second_times, times = extract_info(ws)
 
-        extracted_info = list(zip(days, links, second_times, times))
+        extracted_info = list(zip(days, links, locations, second_times, times))
 
         sorted_info = sorted(extracted_info, key=lambda x: x[0])
 
@@ -178,8 +210,8 @@ for excel_file in excel_files:
         sorted_info = sorted(sorted_info, key=lambda x: day_order[x[0]])
 
         for info in sorted_info:
-            day, link, second_time, time = info
-            data_to_write = f"{day}\n{link}\n{second_time}\n{time}\n"
+            day, link, locations, second_time, time = info
+            data_to_write = f"{day}\n{link}\n{locations}\n{second_time}\n{time}\n"
 
             # Write the data to the output file
             output_file.write(data_to_write)

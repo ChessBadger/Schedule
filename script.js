@@ -16,11 +16,12 @@ function loadData() {
       var currentCard = null;
 
       // Loop through the lines and display them on the webpage
-      for (var i = 0; i < lines.length; i += 4) {
+      for (var i = 0; i < lines.length; i += 5) {
         var day = lines[i];
         var link = lines[i + 1];
-        var second_time = lines[i + 2];
-        var time = lines[i + 3];
+        var location = lines[i + 2];
+        var second_time = lines[i + 3];
+        var time = lines[i + 4];
 
         // Create a card element for each day/group
         var card = document.createElement('div');
@@ -30,21 +31,25 @@ function loadData() {
         var dayElement = document.createElement('h2');
         dayElement.textContent = day;
 
-        var timeElement = document.createElement('p');
-        timeElement.textContent = time;
-
-        var secondTimeElement = document.createElement('p');
-        secondTimeElement.textContent = second_time;
-
         // Create an anchor element for the link
         var linkElement = document.createElement('a');
         linkElement.href = link;
         linkElement.target = '_blank'; // Open in a new tab
         linkElement.textContent = link;
 
+        var locationElement = document.createElement('h3');
+        locationElement.textContent = location;
+
+        var secondTimeElement = document.createElement('p');
+        secondTimeElement.textContent = second_time;
+
+        var timeElement = document.createElement('p');
+        timeElement.textContent = time;
+
         // Append elements to the card
         card.appendChild(dayElement);
         card.appendChild(linkElement);
+        card.appendChild(locationElement);
         card.appendChild(secondTimeElement);
         card.appendChild(timeElement);
 

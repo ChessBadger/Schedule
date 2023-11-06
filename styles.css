@@ -1,0 +1,74 @@
+/* Reset some default styles for consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header styling */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Card styling for individual days of the week */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px auto; /* Center horizontally and add vertical margin */
+  max-width: 600px;
+}
+
+/* Card styling for each week */
+.week-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px auto; /* Center horizontally and add vertical margin */
+  max-width: 600px;
+}
+
+/* Day (header) styling */
+h2 {
+  font-size: 1.5rem; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 10px; /* Add some spacing below */
+  text-align: center; /* Center the text horizontally */
+}
+
+/* Paragraph (line) styling */
+p {
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Link styling */
+a {
+  color: #d9534f;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #c9302c;
+}
+
+/* Media Query for Mobile-Friendly Design */
+@media (max-width: 600px) {
+  .card,
+  .week-card {
+    padding: 10px;
+  }
+}

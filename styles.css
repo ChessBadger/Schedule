@@ -69,6 +69,16 @@ a:hover {
 @media (max-width: 600px) {
   .card,
   .week-card {
-    padding: 10px;
+    padding: 20px; /* Increase padding to make cards larger */
+    max-width: 90%; /* Make cards take up 90% of the screen width */
+  }
+
+  h2 {
+    font-size: 1.2rem; /* Reduce font size for headers on mobile */
+  }
+
+  p {
+    margin: 10px 0;
+    font-size: 0.9rem; /* Reduce font size for paragraphs on mobile */
   }
 }

@@ -10,8 +10,11 @@ if os.path.exists(file_path):
     os.remove(file_path)
     print(f"{file_path} has been deleted.")
 
+search_name = "lashaun"
 
 # Function to search for "Lashaun" in a worksheet and extract links and times
+
+
 def extract_info(ws):
     days = []
     days_to_numbers = {
@@ -30,7 +33,7 @@ def extract_info(ws):
 
     for row in ws.iter_rows():
         for cell in row:
-            if cell.value and "LASHAUN" in str(cell.value).upper():
+            if cell.value and search_name.upper() in str(cell.value).upper():
                 # Search for a link moving up
                 day = None
                 # Check the cell above and up to 3 cells above
@@ -49,7 +52,7 @@ def extract_info(ws):
 
     for row in ws.iter_rows():
         for cell in row:
-            if cell.value and "LASHAUN" in str(cell.value).upper():
+            if cell.value and search_name.upper() in str(cell.value).upper():
                 # Search for a link moving up
                 link = None
                 # Check the cell above and up to 3 cells above
